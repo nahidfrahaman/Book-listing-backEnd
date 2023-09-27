@@ -2,39 +2,27 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { CategoryService } from './category.service';
-
-const insertToDb = catchAsync(async (req: Request, res: Response) => {
-  const data = req.body;
-  const results = await CategoryService.insertToDb(data);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'category created successfuly',
-    data: results,
-  });
-});
+import { UserService } from './user.service';
 
 const getAllToDb = catchAsync(async (req: Request, res: Response) => {
-  const results = await CategoryService.getAllToDb();
+  const results = await UserService.getAllToDb();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: ' User featched successfuly',
     data: results,
   });
 });
 
 const getOneToDb = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const results = await CategoryService.getOneToDb(id);
+  const results = await UserService.getOneToDb(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'User featched successfuly',
     data: results,
   });
 });
@@ -42,32 +30,30 @@ const getOneToDb = catchAsync(async (req: Request, res: Response) => {
 const updateToDb = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const payload = req.body;
-  const results = await CategoryService.updateToDb(id, payload);
+  const results = await UserService.updateToDb(id, payload);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'User Updated successfuly',
     data: results,
   });
 });
 
 const deleteToDb = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const results = await CategoryService.deleteToDb(id);
+  const results = await UserService.deleteToDb(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'User deleted  successfuly',
     data: results,
   });
 });
-
-export const CategoryController = {
-  insertToDb,
+export const UserController = {
+  deleteToDb,
   getAllToDb,
   getOneToDb,
   updateToDb,
-  deleteToDb,
 };

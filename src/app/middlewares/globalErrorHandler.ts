@@ -1,14 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Prisma } from '@prisma/client';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { ZodError } from 'zod';
 import ApiError from '../../Error/ApiError';
-import handleZodError from '../../Error/handleZodError';
 import config from '../../config';
 import { IGenericErrorMessage } from '../../interface/error';
-import prisma from '../../shared/prisma';
 
 const globalErrorHandler: ErrorRequestHandler = (
   error,
@@ -16,27 +14,32 @@ const globalErrorHandler: ErrorRequestHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  //   config.env === 'development'
-  //     ? console.log(`🐱‍🏍 globalErrorHandler ~~`, { error })
-  //     : errorlogger.error(`🐱‍🏍 globalErrorHandler ~~`, error);
+  // config.env === 'development'
+  //   ? console.log(`🐱‍🏍 globalErrorHandler ~~`, { error })
+  //   : console.error(`🐱‍🏍 globalErrorHandler ~~`, error);
 
   let statusCode = 500;
   let message = 'Something went wrong !';
   let errorMessages: IGenericErrorMessage[] = [];
 
-  if (error instanceof prisma.PrismaClientKnownRequestError) {
+  if (error instanceof Prisma.PrismaClientValidationError) {
     statusCode = httpStatus.CONFLICT;
-    message = error.message;
-  } else if (error instanceof prisma.PrismaClientValidationError) {
+    const line = error.message.trim().split('\n');
+    console.log(line[line.length - 1]);
+    message = line[line.length - 1];
+    console.log(message);
+  } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
     statusCode = httpStatus.BAD_REQUEST;
-    message = error.message;
-  } else if (error instanceof ZodError) {
-    const simplifiedError = handleZodError(error);
-    statusCode = simplifiedError.statusCode;
-    message = simplifiedError.message;
-    errorMessages = simplifiedError.errorMessages;
+    const line = error.message.trim().split('\n');
+    message = line[line.length - 1];
   }
-  if (error instanceof ApiError) {
+  // else if (error instanceof ZodError) {
+  //   const simplifiedError = handleZodError(error);
+  //   statusCode = simplifiedError.statusCode;
+  //   message = simplifiedError.message;
+  //   errorMessages = simplifiedError.errorMessages;
+  // }
+  else if (error instanceof ApiError) {
     statusCode = error?.statusCode;
     message = error.message;
     errorMessages = error?.message

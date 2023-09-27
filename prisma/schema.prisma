@@ -45,7 +45,7 @@ model Book {
   author         String
   price          Float
   genre          String
-  publicatinDate String @map("publication_date")
+  publicationDate String @map("publication_date")
   categoryId String @map("category_id")
   category Category @relation(fields: [categoryId], references: [id])
 

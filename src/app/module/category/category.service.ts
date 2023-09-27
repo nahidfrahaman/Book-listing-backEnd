@@ -22,14 +22,6 @@ const getOneToDb = async (id: string): Promise<Category | null> => {
   return results;
 };
 
-const deleteToDb = async (id: string): Promise<Partial<Category>> => {
-  const results = await prisma.category.delete({
-    where: {
-      id,
-    },
-  });
-  return results;
-};
 const updateToDb = async (
   id: string,
   payload: Partial<Category>,
@@ -39,6 +31,15 @@ const updateToDb = async (
       id,
     },
     data: payload,
+  });
+  return results;
+};
+
+const deleteToDb = async (id: string): Promise<Partial<Category>> => {
+  const results = await prisma.category.delete({
+    where: {
+      id,
+    },
   });
   return results;
 };
