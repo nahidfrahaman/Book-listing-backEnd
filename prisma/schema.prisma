@@ -15,7 +15,7 @@ model User {
   name       String
   email      String   @unique
   password   String
-  role       Role     @default(USER)
+  role       Role     @default(customer)
   contactNo  String   @unique @map("contact_no")
   address    String
   profileImg String   @map("profile_img")
@@ -109,6 +109,6 @@ model OrderdBook {
 }
 
 enum Role {
-  USER
-  ADMIN
+  customer
+  admin
 }

@@ -9,7 +9,7 @@ export default {
   database_url: process.env.DATABASE_URL,
 
   default_admin_pass: process.env.DEFAULT_ADMIN_PASS,
-  bycrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
+  bycrypt_salt_rounds: process.env.DEFAULT_SOLT_ROUND,
   jwt: {
     secret: process.env.JWT_SECRET,
     refresh_secret: process.env.JWT_REFRESH_SECRET,
