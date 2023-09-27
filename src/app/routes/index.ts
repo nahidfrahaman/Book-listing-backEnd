@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
+import { CategoryRoutes } from '../module/category/category.routes';
 
 const router = express.Router();
 
 const moduleRoutes = [
   // ... routes
   {
-    path: '',
-    routes: '',
+    path: '/categories',
+    routes: CategoryRoutes,
   },
 ];
 
