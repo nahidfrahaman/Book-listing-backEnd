@@ -16,6 +16,19 @@ const insertToDb = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const login = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+  const results = await AuthService.login(payload);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'category created successfuly',
+    data: results,
+  });
+});
+
 export const AuthController = {
   insertToDb,
+  login,
 };
