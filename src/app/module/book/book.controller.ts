@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { BookService } from './book.service';
 
@@ -17,7 +18,20 @@ const insertToDb = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllToDb = catchAsync(async (req: Request, res: Response) => {
-  const results = await BookService.getAllToDb();
+  const paginationOption = pick(req.query, [
+    'page',
+    'size',
+    'sortBy',
+    'sortOrder',
+  ]);
+
+  const filterData = pick(req.query, [
+    'minPrice',
+    'maxPrice',
+    'category',
+    'search',
+  ]);
+  const results = await BookService.getAllToDb(paginationOption, filterData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
