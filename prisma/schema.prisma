@@ -21,9 +21,11 @@ model User {
   profileImg String   @map("profile_img")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
-  orders     Order[]
+  users   Order[]
+
+
   reviewsAndRatings ReviewAndRating[]
-  @@map("users")
+  @@map("users") 
 }
 
 model Category {
@@ -78,10 +80,10 @@ model ReviewAndRating {
 
 model Order {
   id     String @id @default(uuid())
-  status String
+  status Status @default(pending)
 
-  orderId String @map("order_id")
-  order   User   @relation(fields: [orderId], references: [id])
+  userId  String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -111,4 +113,11 @@ model OrderdBook {
 enum Role {
   customer
   admin
+}
+
+enum Status {
+  pending
+  shipped
+  delivered 
+
 }

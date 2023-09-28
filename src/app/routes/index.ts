@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
+import { OrderRoutes } from '../module/Order/order.routes';
 import { AuthRoutes } from '../module/auth/auth.routes';
 import { BooKRoutes } from '../module/book/book.routes';
 import { CategoryRoutes } from '../module/category/category.routes';
@@ -24,6 +25,10 @@ const moduleRoutes = [
   {
     path: '/users',
     routes: UserRoutes,
+  },
+  {
+    path: '/orders',
+    routes: OrderRoutes,
   },
 ];
 
