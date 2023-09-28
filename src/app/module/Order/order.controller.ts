@@ -20,7 +20,9 @@ const insertToDb = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllToDb = catchAsync(async (req: Request, res: Response) => {
-  const results = await OrderService.getAllToDb();
+  const user = req.user;
+
+  const results = await OrderService.getAllToDb(user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

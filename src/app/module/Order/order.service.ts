@@ -48,13 +48,30 @@ const insertToDb = async (user: any, payload: any): Promise<any> => {
   throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to create course');
 };
 
-const getAllToDb = async (): Promise<Order[]> => {
-  const results = await prisma.order.findMany({
-    include: {
-      orderd_books: true,
-    },
-  });
-  return results;
+const getAllToDb = async (user: any): Promise<Order[]> => {
+  const { id, role } = user;
+  console.log(role, id);
+
+  if (role === 'admin') {
+    const results = await prisma.order.findMany({
+      include: {
+        orderd_books: true,
+      },
+    });
+    return results;
+  }
+  if (role === 'customer') {
+    const results = await prisma.order.findMany({
+      where: {
+        userId: id,
+      },
+      include: {
+        orderd_books: true,
+      },
+    });
+    return results;
+  }
+  throw new ApiError(httpStatus.NOT_FOUND, 'no order available');
 };
 
 export const OrderService = {
