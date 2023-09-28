@@ -12,7 +12,7 @@ const insertToDb = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'User created successfuly',
     data: results,
   });
 });
@@ -33,7 +33,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'User signin successfully',
     data: others,
   });
 });
@@ -45,7 +45,7 @@ const getProfile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'profile feateched successfuly',
     data: results,
   });
 });

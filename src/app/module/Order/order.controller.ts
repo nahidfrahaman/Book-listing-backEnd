@@ -14,7 +14,7 @@ const insertToDb = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'Order created successfuly',
     data: results,
   });
 });
@@ -27,7 +27,7 @@ const getAllToDb = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'Order featecd successfuly',
     data: results,
   });
 });
@@ -40,7 +40,7 @@ const getSpecificData = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category created successfuly',
+    message: 'Order feateched successfuly',
     data: results,
   });
 });
