@@ -10,6 +10,13 @@ router.post(
   auth(ENUM_USER_ROLE.CUSTOMER),
   OrderController.insertToDb,
 );
+
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getSpecificData,
+);
+
 router.get(
   '/',
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),

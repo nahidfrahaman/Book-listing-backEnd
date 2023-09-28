@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Order } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../Error/ApiError';
 import prisma from '../../../shared/prisma';
 
 const insertToDb = async (user: any, payload: any): Promise<any> => {
-  console.log(user.id, user.role);
   const { orderedBooks } = payload;
   console.log(orderedBooks.length);
 
@@ -60,6 +60,7 @@ const getAllToDb = async (user: any): Promise<Order[]> => {
     });
     return results;
   }
+
   if (role === 'customer') {
     const results = await prisma.order.findMany({
       where: {
@@ -74,7 +75,35 @@ const getAllToDb = async (user: any): Promise<Order[]> => {
   throw new ApiError(httpStatus.NOT_FOUND, 'no order available');
 };
 
+const getSpecificData = async (id: string, user: any): Promise<any> => {
+  const { id: userid, role } = user;
+  if (role === 'customer') {
+    const results = await prisma.order.findUnique({
+      where: {
+        id: id,
+        userId: userid,
+      },
+      include: {
+        orderd_books: true,
+      },
+    });
+    return results;
+  }
+  console.log('Order0id:', id, role);
+  const results = await prisma.order.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      orderd_books: true,
+    },
+  });
+
+  return results;
+};
+
 export const OrderService = {
   insertToDb,
   getAllToDb,
+  getSpecificData,
 };

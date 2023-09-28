@@ -38,7 +38,20 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getProfile = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const results = await AuthService.getProfile(user);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'category created successfuly',
+    data: results,
+  });
+});
+
 export const AuthController = {
   insertToDb,
   login,
+  getProfile,
 };

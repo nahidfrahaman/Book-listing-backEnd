@@ -89,7 +89,20 @@ const login = async (payload: Ilogin): Promise<any> => {
   };
 };
 
+const getProfile = async (user: any): Promise<any> => {
+  const { id, role } = user;
+  const results = await prisma.user.findUnique({
+    where: {
+      id,
+      role,
+    },
+  });
+
+  return results;
+};
+
 export const AuthService = {
   insertToDb,
   login,
+  getProfile,
 };

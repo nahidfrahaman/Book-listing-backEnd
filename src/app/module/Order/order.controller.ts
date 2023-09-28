@@ -32,7 +32,21 @@ const getAllToDb = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSpecificData = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const { id } = req.params;
+  const results = await OrderService.getSpecificData(id, user);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'category created successfuly',
+    data: results,
+  });
+});
+
 export const OrderController = {
   insertToDb,
   getAllToDb,
+  getSpecificData,
 };
